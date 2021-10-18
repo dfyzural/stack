@@ -41,7 +41,7 @@
 				{"name":"i","type":"uint8"}
 			],
 			"outputs": [
-				{"name":"value0","type":"string"}
+				{"components":[{"name":"title","type":"string"},{"name":"timestamp","type":"uint32"},{"name":"done","type":"bool"}],"name":"value0","type":"tuple"}
 			]
 		},
 		{
@@ -60,6 +60,14 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"string"}
+			]
+		},
+		{
+			"name": "num",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"num","type":"uint8"}
 			]
 		}
 	],

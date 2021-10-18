@@ -28,15 +28,8 @@ contract Stack {
 		tvm.accept();
 		_;
 	}
-/*
-v добавить задачу (должен в сопоставление заполняться последовательный целочисленный ключ)
--v получить количество открытых задач (возвращает число)
--v получить список задач
-v получить описание задачи по ключу
-- удалить задачу по ключу
-- отметить задачу как выполненную по ключу
-*/
 
+    //добавить задачу (должен в сопоставление заполняться последовательный целочисленный ключ)
 	// Function add 
 	function add(string title) public checkOwnerAndAccept returns(uint8) {
         require(title != "", 103);
@@ -46,19 +39,21 @@ v получить описание задачи по ключу
         return num;
 	}
 
+    // получить количество открытых задач (возвращает число)
    	// Function count Open Tasks
  	function countOpenTasks() public checkOwnerAndAccept returns (uint8){
         require(num>0, 104);
         uint8 count = 0;
 
         for (uint8 i = 1; i<=num; i++){
-            if(tasks_array[uint8(i)].done){
+            if( (!tasks_array[uint8(i)].done) && (tasks_array[uint8(i)].title != "") ){
                 count++;
             }
         }
         return count;
     }
 
+    // получить список задач
    	// Function get List
 	function getList() public checkOwnerAndAccept returns (string){
         require(num>0, 105);
@@ -80,20 +75,16 @@ v получить описание задачи по ключу
         return list;
     }
     	
-
+    // получить описание задачи по ключу
    	// Function get Task
-	function getTask(uint8 i) public checkOwnerAndAccept returns (string){
+	function getTask(uint8 i) public checkOwnerAndAccept returns (task){
         require(i>0, 106);
-        string status="";
-        if (tasks_array[i].done){
-            status = " - done";
-        }else{
-            status = " - not completed";
-        }
+        require(tasks_array[i].title != "", 107);
 
-        return tasks_array[i].title + status;
+        return tasks_array[i];
 	}
 
+    // удалить задачу по ключу
     // Function delete Task
 	function deleteTask(uint8 i) public checkOwnerAndAccept returns (string){
         string tit;
@@ -104,8 +95,11 @@ v получить описание задачи по ключу
         return tit + " - deleted";
 	}
 
+    // отметить задачу как выполненную по ключу
     // Function done Task
 	function doneTask(uint8 i) public checkOwnerAndAccept returns (string){
+        
+        require(tasks_array[i].title != "", 108);
         string tit;
         tit = tasks_array[i].title;
 
